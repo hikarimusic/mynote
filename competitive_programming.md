@@ -19,9 +19,20 @@ bool dfs("<position>") {
     }
     return false;
 }
+```
+
+## Dynamic Programming / 動的計画法
+
+### DP /  DP
+```cpp
+vector<vector<int>> dp;
 
 void solve() {
-    if (dfs("<start position>"))
-        "<print solution>";
+    "<initialize>";
+    for (int i=1; i<=N; ++i) {
+        for (int j=1; j<=M; ++j) {
+            dp[i][j] = "<function of dp[i-1][j-1], dp[i-1][j], ...>";
+        }
+    }
 }
 ```
