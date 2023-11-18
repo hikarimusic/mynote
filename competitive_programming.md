@@ -75,3 +75,32 @@ void union_set(int a, int b) {
     s[a] += s[b];
 }
 ```
+
+## Graph / グラフ
+
+### Dijkstra Algorithm / ダイクストラ法
+```cpp
+vector<int> d;
+vector<bool> u;
+
+void dijkstra() {
+    d.assign(n, INF);
+    u.assign(n, 0);
+    d[0] = 0;
+    for (int i=0; i<N; ++i) {
+        int v = -1;
+        for (int j=0; j<N; ++j) {
+            if (u[j])
+                continue;
+            if (v==-1 || d[j]<d[v])
+                v = j;
+        }
+        if (d[v]==INF)
+            break;
+        u[v] = 1;
+        for (int j=0; j<N; ++j) {
+            d[j] = min(d[j], d[v]+g[v][j]);
+        }
+    }
+}
+```
