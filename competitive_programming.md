@@ -2,9 +2,24 @@
 
 ## Search / 探索
 
-### Pruning / 枝刈り
+### Exhaustive Search / 全探索
 ```cpp
-vector<vector<int>> sol;
+vector<int> arr;
+
+void dfs("<position>") {
+    if ("<complete>") {
+        "<check>";
+        return;
+    }
+    for ("<next step>") {
+        "<construct state>";
+        dfs("<next position>");
+        "<recover state>";
+    }
+}
+```
+```cpp
+vector<int> sol;
 
 bool dfs("<position>") {
     if ("<complete>")
@@ -18,6 +33,21 @@ bool dfs("<position>") {
         "<recover solution>";
     }
     return false;
+}
+```
+
+### Binary Search / 二分探索
+```cpp
+void search() {
+    int l=-1, r=N;
+    while (r-l>1) {
+        int m = (l+r)/2;
+        int a = "<value at m>";
+        if (t < a)
+            r = m;
+        else
+            l = m;
+    }
 }
 ```
 
@@ -73,6 +103,46 @@ void union_set(int a, int b) {
         swap(a, b);
     p[b] = a;
     s[a] += s[b];
+}
+```
+
+### Segment Tree / セグメント木
+```cpp
+vector<int> a, t;
+
+void build(int v, int tl, int tr) {
+    if (tl==tr) {
+        t[v] = a[tl];
+        return;
+    }
+    int tm = (tl+tr)/2;
+    build(v*2+1, tl, tm);
+    build(v*2+2, tm+1, tr);
+    t[v] = "<merge t[v*2+1] and t[v*2+2]>";
+}
+
+void update(int v, int tl, int tr, int id, int nv) {
+    if (tl==tr) {
+        t[v] = nv;
+        return;
+    }
+    int tm = (tl+tr)/2;
+    if (id<=tm)
+        update(v*2+1, tl, tm, id, nv);
+    else
+        update(v*2+2, tm+1, tr, id, nv);
+    t[v] = "<merge t[v*2+1] and t[v*2+2]>";
+}
+
+int query(int v, int tl, int tr, int l, int r) {
+    if (l>r)
+        return "<identity>";
+    if (tl==l && tr==r)
+        return t[v];
+    int tm = (tl+tr)/2;
+    int q1 = query(v*2+1, tl, tm, l, min(r, tm));
+    int q2 = query(v*2+2, tm+1, tr, max(l, tm+1), r);
+    return "<merge q1 and q2>";
 }
 ```
 
